@@ -17,6 +17,9 @@ jobs:
       # No dependencies to install: build.ts runs on Node's own type stripping.
       - name: Regenerate dist/ from tokens/
         run: npm run build
+      - name: Contrast report (informational)
+        run: python3 build/check_contrast.py
+
       - name: Fail if dist/ was stale
         run: |
           if ! git diff --exit-code dist/; then

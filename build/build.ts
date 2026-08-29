@@ -21,6 +21,8 @@ const spacing = read('spacing.json');
 const radii = read('radii.json');
 const elevation = read('elevation.json');
 const typography = read('typography.json');
+const layout = read('layout.json');
+const motion = read('motion.json');
 
 const GENERATED = 'GENERATED FILE — do not edit. Source: tokens/*.json, generator: build/build.ts.';
 
@@ -58,6 +60,14 @@ const rgba = (hex: string, opacity: number) => {
   const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 };
+
+// Web targets emit rem so they respect browser zoom and the reader's font size.
+// Flutter keeps raw logical pixels, which already scale via textScaleFactor.
+const REM_BASE = 16;
+const rem = (px: number) => `${+(px / REM_BASE).toFixed(4)}rem`;
+// A pill is "effectively infinite", not a measurement — scaling it with font size is meaningless.
+const radiusCss = (name: string, px: number) => (name === 'pill' ? `${px}px` : rem(px));
+const bezier = (c: number[]) => `cubic-bezier(${c.join(', ')})`;
 
 const write = (relative: string, body: string) => {
   const path = join(ROOT, relative);
@@ -162,6 +172,14 @@ class AppTextToken {
   final double lineHeight;
 }
 
+/// Motion. Source: tokens/motion.json. Honour MediaQuery.disableAnimations —
+/// see docs/ACCESSIBILITY.md.
+class AppMotion {
+  const AppMotion._();
+
+${Object.entries<number>(motion.duration).map(([n, v]) => `  static const Duration ${n} = Duration(milliseconds: ${v});`).join('\n')}
+}
+
 /// Mobile type scale. Source: tokens/typography.json.
 class AppTextTokens {
   const AppTextTokens._();
@@ -175,8 +193,11 @@ ${textLines}
 
 function css(): string {
   const lines = Object.entries(flatColors).map(([name, hex]) => `  --cta-${kebab(name)}: ${hex};`);
-  const space = Object.entries<number>(spacing.scale).map(([n, v]) => `  --cta-space-${n.slice(1)}: ${v}px;`);
-  const radius = Object.entries<number>(radii.scale).map(([n, v]) => `  --cta-radius-${n}: ${v}px;`);
+  const space = Object.entries<number>(spacing.scale).map(([n, v]) => `  --cta-space-${n.slice(1)}: ${rem(v)};`);
+  const radius = Object.entries<number>(radii.scale).map(([n, v]) => `  --cta-radius-${n}: ${radiusCss(n, v)};`);
+  const container = Object.entries<number>(layout.container).map(([n, v]) => `  --cta-container-${n}: ${v}rem;`);
+  const durations = Object.entries<number>(motion.duration).map(([n, v]) => `  --cta-duration-${n}: ${v}ms;`);
+  const easings = Object.entries<number[]>(motion.easing).map(([n, c]) => `  --cta-ease-${n}: ${bezier(c)};`);
   const g = color.gradient.goldGradient;
   const s = color.gradient.splashRadial;
   const shadows = Object.entries<any>(elevation.levels)
@@ -191,6 +212,11 @@ ${lines.join('\n')}
 ${space.join('\n')}
 
 ${radius.join('\n')}
+
+${container.join('\n')}
+
+${durations.join('\n')}
+${easings.join('\n')}
 
   --cta-gradient-gold: linear-gradient(${g.cssAngleDeg}deg, ${resolve(g.stops[0].color)} 0%, ${resolve(g.stops[1].color)} 100%);
   --cta-gradient-splash: radial-gradient(circle at 50% ${((1 + s.center[1]) / 2 * 100).toFixed(0)}%, ${s.stops.map((x: any) => `${resolve(x.color)} ${(x.at * 100).toFixed(0)}%`).join(', ')});
@@ -214,6 +240,8 @@ function ts(): string {
     radii: radii.scale,
     typography: { family: typography.family, scale: typography.scale },
     elevation: elevation.levels,
+    container: layout.container,
+    motion: { duration: motion.duration, easing: motion.easing },
   };
   return `// ${GENERATED}
 
@@ -228,7 +256,62 @@ export default tokens;
 `;
 }
 
-// --- Tailwind preset ------------------------------------------------------
+
+// --- Tailwind v4 @theme ---------------------------------------------------
+// v4 configures through CSS, not a JS preset object: values declared in @theme
+// under a known namespace (--color-*, --spacing-*, --radius-*, --font-*,
+// --shadow-*, --container-*, --ease-*) become real utilities. The v3 preset
+// below stays for consumers still on v3.
+
+function tailwindTheme(): string {
+  const colors = Object.entries(flatColors).map(([name, hex]) => `  --color-${kebab(name)}: ${hex};`);
+  const space = Object.entries<number>(spacing.scale).map(([n, v]) => `  --spacing-${n.slice(1)}: ${rem(v)};`);
+  const radius = Object.entries<number>(radii.scale).map(([n, v]) => `  --radius-${n}: ${radiusCss(n, v)};`);
+  const container = Object.entries<number>(layout.container).map(([n, v]) => `  --container-${n}: ${v}rem;`);
+  const easings = Object.entries<number[]>(motion.easing).map(([n, c]) => `  --ease-${n}: ${bezier(c)};`);
+  const durations = Object.entries<number>(motion.duration).map(([n, v]) => `  --cta-duration-${n}: ${v}ms;`);
+  const shadows = Object.entries<any>(elevation.levels)
+    .filter(([, l]) => l.kind === 'shadow')
+    .map(([n, l]) => `  --shadow-${n}: ${l.x}px ${l.y}px ${l.blur}px ${rgba(resolve(l.color), l.opacity)};`);
+  const g = color.gradient.goldGradient;
+
+  return `/* ${GENERATED} */
+/*
+ * Tailwind CSS v4. In the consuming app's stylesheet:
+ *   @import "tailwindcss";
+ *   @import "@cta/design-system/tailwind-theme";
+ *
+ * Same caution as the v3 preset: only the steps declared here exist. Any other
+ * step (neutral-400, neutral-950, ...) falls back to Tailwind's own palette,
+ * which is a different hue. Add the token to tokens/color.json first.
+ */
+
+@theme {
+${colors.join('\n')}
+
+${space.join('\n')}
+
+${radius.join('\n')}
+
+${container.join('\n')}
+
+${shadows.join('\n')}
+
+${easings.join('\n')}
+
+  --font-display: '${typography.family.display.name}', ${typography.family.display.fallback.join(', ')};
+  --font-body: '${typography.family.body.name}', ${typography.family.body.fallback.join(', ')};
+}
+
+:root {
+${durations.join('\n')}
+  --cta-gradient-gold: linear-gradient(${g.cssAngleDeg}deg, ${resolve(g.stops[0].color)} 0%, ${resolve(g.stops[1].color)} 100%);
+  --cta-border-card: ${elevation.levels.card.width}px solid ${resolve(elevation.levels.card.color)};
+}
+`;
+}
+
+// --- Tailwind v3 preset ---------------------------------------------------
 
 function tailwind(): string {
   const gold = Object.fromEntries(Object.entries(color.brand).map(([n, v]) => [n.replace('gold', ''), resolve(v as string)]));
@@ -237,8 +320,11 @@ function tailwind(): string {
   const chip = Object.fromEntries(
     Object.entries<any>(color.chip).map(([tone, pair]) => [tone, { bg: resolve(pair.bg), fg: resolve(pair.fg) }]),
   );
-  const space = Object.fromEntries(Object.entries<number>(spacing.scale).map(([n, v]) => [n.slice(1), `${v}px`]));
-  const radius = Object.fromEntries(Object.entries<number>(radii.scale).map(([n, v]) => [n, `${v}px`]));
+  const space = Object.fromEntries(Object.entries<number>(spacing.scale).map(([n, v]) => [n.slice(1), rem(v)]));
+  const radius = Object.fromEntries(Object.entries<number>(radii.scale).map(([n, v]) => [n, radiusCss(n, v)]));
+  const maxWidth = Object.fromEntries(Object.entries<number>(layout.container).map(([n, v]) => [n, `${v}rem`]));
+  const duration = Object.fromEntries(Object.entries<number>(motion.duration).map(([n, v]) => [n, `${v}ms`]));
+  const timing = Object.fromEntries(Object.entries<number[]>(motion.easing).map(([n, c]) => [n, bezier(c)]));
   const shadow = Object.fromEntries(
     Object.entries<any>(elevation.levels)
       .filter(([, l]) => l.kind === 'shadow')
@@ -260,6 +346,9 @@ function tailwind(): string {
         spacing: space,
         borderRadius: radius,
         boxShadow: shadow,
+        maxWidth,
+        transitionDuration: duration,
+        transitionTimingFunction: timing,
         fontFamily: {
           display: [typography.family.display.name, ...typography.family.display.fallback],
           body: [typography.family.body.name, ...typography.family.body.fallback],
@@ -321,4 +410,5 @@ write('dist/dart/pubspec.yaml', pubspec());
 write('dist/css/tokens.css', css());
 write('dist/ts/tokens.ts', ts());
 write('dist/tailwind/preset.js', tailwind());
+write('dist/tailwind/theme.css', tailwindTheme());
 console.log('done');

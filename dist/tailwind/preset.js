@@ -60,25 +60,43 @@ module.exports = {
         }
       },
       "spacing": {
-        "1": "4px",
-        "2": "8px",
-        "3": "12px",
-        "4": "16px",
-        "5": "20px",
-        "6": "24px",
-        "8": "32px",
-        "10": "40px"
+        "1": "0.25rem",
+        "2": "0.5rem",
+        "3": "0.75rem",
+        "4": "1rem",
+        "5": "1.25rem",
+        "6": "1.5rem",
+        "8": "2rem",
+        "10": "2.5rem",
+        "12": "3rem",
+        "16": "4rem",
+        "20": "5rem",
+        "24": "6rem"
       },
       "borderRadius": {
-        "sm": "6px",
-        "md": "10px",
-        "lg": "14px",
-        "xl": "20px",
+        "sm": "0.375rem",
+        "md": "0.625rem",
+        "lg": "0.875rem",
+        "xl": "1.25rem",
         "pill": "999px"
       },
       "boxShadow": {
         "raised": "0px 2px 6px rgba(17, 24, 39, 0.06)",
         "modal": "0px 12px 32px rgba(17, 24, 39, 0.12)"
+      },
+      "maxWidth": {
+        "reading": "44rem",
+        "content": "72rem",
+        "wide": "80rem"
+      },
+      "transitionDuration": {
+        "fast": "150ms",
+        "base": "250ms",
+        "slow": "500ms"
+      },
+      "transitionTimingFunction": {
+        "standard": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "spring": "cubic-bezier(0.34, 1.56, 0.64, 1)"
       },
       "fontFamily": {
         "display": [

@@ -61,18 +61,23 @@ def gen_texttokens(text):
         out[name] = (fam, float(size), int(weight), float(lh))
     return out
 
-def compare(label, a, b, ignore=()):
-    diffs = []
+def compare(label, a, b):
+    """The guarantee is one-directional: every value the app renders today must be
+    reproduced exactly. Tokens that exist only in the generated output are additions
+    nothing references yet (desktop spacing, motion) and cannot change the app, so
+    they are reported for visibility rather than failed."""
+    diffs, extra = [], []
     for k in sorted(set(a) | set(b)):
-        if k in ignore:
-            continue
         if k not in a:
-            diffs.append(f"  {k}: missing in app_theme.dart, generated={b[k]}")
+            extra.append(k)
         elif k not in b:
             diffs.append(f"  {k}: present in app_theme.dart ({a[k]}) but NOT generated")
         elif a[k] != b[k]:
             diffs.append(f"  {k}: app_theme={a[k]}  generated={b[k]}")
-    print(f"{label}: {len(a)} in app_theme, {len(b)} generated -> {'IDENTICAL' if not diffs else str(len(diffs)) + ' DIFFERENCE(S)'}")
+    status = "IDENTICAL" if not diffs else f"{len(diffs)} DIFFERENCE(S)"
+    print(f"{label}: {len(a)} in app_theme, {len(b)} generated -> {status}")
+    if extra:
+        print(f"  (+{len(extra)} generated-only, unused by the app: {', '.join(extra)})")
     for d in diffs:
         print(d)
     return diffs
@@ -108,5 +113,5 @@ for k in sg:
         fails.append(k)
 
 print()
-print("RESULT:", "all generated tokens are value-identical to app_theme.dart" if not fails else f"{len(fails)} difference(s) — NOT identical")
+print("RESULT:", "every value the app renders is reproduced exactly" if not fails else f"{len(fails)} difference(s) — NOT identical")
 sys.exit(1 if fails else 0)

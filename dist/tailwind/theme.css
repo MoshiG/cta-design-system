@@ -1,0 +1,80 @@
+/* GENERATED FILE — do not edit. Source: tokens/*.json, generator: build/build.ts. */
+/*
+ * Tailwind CSS v4. In the consuming app's stylesheet:
+ *   @import "tailwindcss";
+ *   @import "@cta/design-system/tailwind-theme";
+ *
+ * Same caution as the v3 preset: only the steps declared here exist. Any other
+ * step (neutral-400, neutral-950, ...) falls back to Tailwind's own palette,
+ * which is a different hue. Add the token to tokens/color.json first.
+ */
+
+@theme {
+  --color-gold-400: #FACC15;
+  --color-gold-500: #F59E0B;
+  --color-gold-600: #D97706;
+  --color-gold-700: #B45309;
+  --color-neutral-50: #F9FAFB;
+  --color-neutral-100: #F3F4F6;
+  --color-neutral-200: #E5E7EB;
+  --color-neutral-300: #D1D5DB;
+  --color-neutral-500: #6B7280;
+  --color-neutral-600: #4B5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1F2937;
+  --color-neutral-900: #111827;
+  --color-success: #16A34A;
+  --color-warning: #F59E0B;
+  --color-danger: #DC2626;
+  --color-info: #0284C7;
+  --color-on-gold: #451A03;
+  --color-espresso: #292018;
+  --color-chip-info-bg: #F3F4F6;
+  --color-chip-info-fg: #374151;
+  --color-chip-success-bg: #DCFCE7;
+  --color-chip-success-fg: #166534;
+  --color-chip-warning-bg: #FEF3C7;
+  --color-chip-warning-fg: #92400E;
+  --color-chip-danger-bg: #FEE2E2;
+  --color-chip-danger-fg: #991B1B;
+
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.25rem;
+  --radius-pill: 999px;
+
+  --container-reading: 44rem;
+  --container-content: 72rem;
+  --container-wide: 80rem;
+
+  --shadow-raised: 0px 2px 6px rgba(17, 24, 39, 0.06);
+  --shadow-modal: 0px 12px 32px rgba(17, 24, 39, 0.12);
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --font-display: 'Fredoka', sans-serif;
+  --font-body: 'Mona Sans', sans-serif;
+}
+
+:root {
+  --cta-duration-fast: 150ms;
+  --cta-duration-base: 250ms;
+  --cta-duration-slow: 500ms;
+  --cta-gradient-gold: linear-gradient(135deg, #FACC15 0%, #D97706 100%);
+  --cta-border-card: 1px solid #E5E7EB;
+}

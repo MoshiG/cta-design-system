@@ -21,7 +21,8 @@ docs/       DESIGN_SYSTEM.md, BRAND.md, component specs   (arrives in M9d/M9e)
 ```
 
 Run `npm run build` after editing anything in `tokens/`, and commit the `dist/`
-change in the same commit. CI fails the build if `dist/` is stale.
+change in the same commit. CI fails the build if `dist/` is stale. After a colour change,
+also run `python3 build/check_contrast.py`.
 
 ## Consuming it
 
@@ -41,12 +42,22 @@ import 'package:cta_design_system/app_tokens.dart';
 Container(color: AppColors.gold500, padding: EdgeInsets.all(AppSpacing.s4));
 ```
 
-**Web** — Tailwind preset plus the custom properties:
+**Web** — Tailwind **v4** configures through CSS:
+
+```css
+@import "tailwindcss";
+@import "@cta/design-system/tailwind-theme";   /* dist/tailwind/theme.css */
+```
+
+Tailwind **v3** consumers use the JS preset instead:
 
 ```js
 // tailwind.config.js
 presets: [require('@cta/design-system/tailwind-preset')]
 ```
+
+Web targets emit **rem**, so spacing, radii and type scale with the reader's font size and
+browser zoom. Dart keeps logical pixels, which Flutter already scales.
 
 ```
 bg-gold-500  text-neutral-800  rounded-lg  p-4  shadow-modal  bg-gold
@@ -68,9 +79,15 @@ language, not a translation afterthought. Size components against the *Swahili*
 string: no fixed-width buttons, no single-line truncation on primary actions, and
 check both languages at the 320 dp width floor. `docs/bilingual.md` (M9e) expands this.
 
+## Documents
+
+- `docs/ACCESSIBILITY.md` — WCAG 2.2 AA for both clients, with measured contrast ratios
+- `docs/COMPONENT_STATES.md` — the six states every component must define
+- `docs/ADMIN_SURFACE.md` — how the web IMS uses this system (borrow the brand, not the patterns)
+
 ## Status
 
-M9a–M9c are done: repo, tokens, generator, four `dist/` targets. Still to come, after
+M9a–M9c are done: repo, tokens, generator, five `dist/` targets. Still to come, after
 the web shell (M10c) exists — see `cta-app/docs/M9-design-system-plan.md`:
 
 - **M9d** move `DESIGN_SYSTEM.md`, `BRAND.md` and the brand assets here

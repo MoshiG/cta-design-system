@@ -1,0 +1,10 @@
+{
+  "$source": "Visual audit of cta.or.tz, 2026-08-29 \u2014 centred content measured at ~72-80rem.",
+  "$note": "Web only. Flutter sizes against the device, not a container.",
+  "unit": "rem",
+  "container": {
+    "reading": 44,
+    "content": 72,
+    "wide": 80
+  }
+}

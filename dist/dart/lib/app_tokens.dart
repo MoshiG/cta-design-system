@@ -63,6 +63,10 @@ class AppSpacing {
   static const double s6 = 24;
   static const double s8 = 32;
   static const double s10 = 40;
+  static const double s12 = 48;
+  static const double s16 = 64;
+  static const double s20 = 80;
+  static const double s24 = 96;
 }
 
 /// Screen frame constants. Source: tokens/spacing.json "frame".
@@ -110,6 +114,16 @@ class AppTextToken {
   final double size;
   final int weight;
   final double lineHeight;
+}
+
+/// Motion. Source: tokens/motion.json. Honour MediaQuery.disableAnimations —
+/// see docs/ACCESSIBILITY.md.
+class AppMotion {
+  const AppMotion._();
+
+  static const Duration fast = Duration(milliseconds: 150);
+  static const Duration base = Duration(milliseconds: 250);
+  static const Duration slow = Duration(milliseconds: 500);
 }
 
 /// Mobile type scale. Source: tokens/typography.json.

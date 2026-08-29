@@ -1,6 +1,6 @@
 {
-  "$source": "app_theme.dart AppSpacing + DESIGN_SYSTEM.md §4",
-  "$note": "4-pixel grid. s7 and s9 do not exist and are not invented here.",
+  "$source": "app_theme.dart AppSpacing + DESIGN_SYSTEM.md \u00a74",
+  "$note": "4-pixel grid. s7 and s9 do not exist and are not invented here. s1-s10 are transcribed from the Flutter app; s12-s24 are desktop section rhythm added for the web IMS (source: visual audit of cta.or.tz, 2026-08-29, which measured major section padding at roughly 64-96px). No client renders s12-s24 yet.",
   "unit": "px",
   "scale": {
     "s1": 4,
@@ -10,7 +10,11 @@
     "s5": 20,
     "s6": 24,
     "s8": 32,
-    "s10": 40
+    "s10": 40,
+    "s12": 48,
+    "s16": 64,
+    "s20": 80,
+    "s24": 96
   },
   "frame": {
     "screenInset": 16,

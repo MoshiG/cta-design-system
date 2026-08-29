@@ -16,7 +16,8 @@
   "exports": {
     "./tokens": "./dist/ts/tokens.ts",
     "./tokens.css": "./dist/css/tokens.css",
-    "./tailwind-preset": "./dist/tailwind/preset.js"
+    "./tailwind-preset": "./dist/tailwind/preset.js",
+    "./tailwind-theme": "./dist/tailwind/theme.css"
   },
   "scripts": {
     "build": "node --experimental-strip-types build/build.ts",

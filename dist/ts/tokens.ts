@@ -38,7 +38,11 @@ export const tokens = {
     "s5": 20,
     "s6": 24,
     "s8": 32,
-    "s10": 40
+    "s10": 40,
+    "s12": 48,
+    "s16": 64,
+    "s20": 80,
+    "s24": 96
   },
   "frame": {
     "screenInset": 16,
@@ -179,6 +183,32 @@ export const tokens = {
       "spread": 0,
       "color": "#111827",
       "opacity": 0.12
+    }
+  },
+  "container": {
+    "reading": 44,
+    "content": 72,
+    "wide": 80
+  },
+  "motion": {
+    "duration": {
+      "fast": 150,
+      "base": 250,
+      "slow": 500
+    },
+    "easing": {
+      "standard": [
+        0.4,
+        0,
+        0.2,
+        1
+      ],
+      "spring": [
+        0.34,
+        1.56,
+        0.64,
+        1
+      ]
     }
   }
 } as const;

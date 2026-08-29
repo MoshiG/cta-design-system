@@ -1,0 +1,24 @@
+{
+  "$source": "DESIGN_SYSTEM.md \u00a77 + visual audit of cta.or.tz, 2026-08-29 (transitions measured at 150-350ms).",
+  "$note": "Both clients must honour a reduced-motion preference: prefers-reduced-motion on web, MediaQuery.disableAnimations in Flutter. See docs/ACCESSIBILITY.md.",
+  "duration": {
+    "fast": 150,
+    "base": 250,
+    "slow": 500
+  },
+  "durationUnit": "ms",
+  "easing": {
+    "standard": [
+      0.4,
+      0,
+      0.2,
+      1
+    ],
+    "spring": [
+      0.34,
+      1.56,
+      0.64,
+      1
+    ]
+  }
+}
