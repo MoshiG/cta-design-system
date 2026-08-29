@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tokens:
+    name: dist/ is current
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # No dependencies to install: build.ts runs on Node's own type stripping.
+      - name: Regenerate dist/ from tokens/
+        run: npm run build
+      - name: Fail if dist/ was stale
+        run: |
+          if ! git diff --exit-code dist/; then
+            echo "::error::dist/ is out of date. Run 'npm run build' and commit the result."
+            exit 1
+          fi

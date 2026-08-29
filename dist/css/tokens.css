@@ -1,0 +1,56 @@
+/* GENERATED FILE — do not edit. Source: tokens/*.json, generator: build/build.ts. */
+
+:root {
+  --cta-gold-400: #FACC15;
+  --cta-gold-500: #F59E0B;
+  --cta-gold-600: #D97706;
+  --cta-gold-700: #B45309;
+  --cta-neutral-50: #F9FAFB;
+  --cta-neutral-100: #F3F4F6;
+  --cta-neutral-200: #E5E7EB;
+  --cta-neutral-300: #D1D5DB;
+  --cta-neutral-500: #6B7280;
+  --cta-neutral-600: #4B5563;
+  --cta-neutral-700: #374151;
+  --cta-neutral-800: #1F2937;
+  --cta-neutral-900: #111827;
+  --cta-success: #16A34A;
+  --cta-warning: #F59E0B;
+  --cta-danger: #DC2626;
+  --cta-info: #0284C7;
+  --cta-on-gold: #451A03;
+  --cta-espresso: #292018;
+  --cta-chip-info-bg: #F3F4F6;
+  --cta-chip-info-fg: #374151;
+  --cta-chip-success-bg: #DCFCE7;
+  --cta-chip-success-fg: #166534;
+  --cta-chip-warning-bg: #FEF3C7;
+  --cta-chip-warning-fg: #92400E;
+  --cta-chip-danger-bg: #FEE2E2;
+  --cta-chip-danger-fg: #991B1B;
+
+  --cta-space-1: 4px;
+  --cta-space-2: 8px;
+  --cta-space-3: 12px;
+  --cta-space-4: 16px;
+  --cta-space-5: 20px;
+  --cta-space-6: 24px;
+  --cta-space-8: 32px;
+  --cta-space-10: 40px;
+
+  --cta-radius-sm: 6px;
+  --cta-radius-md: 10px;
+  --cta-radius-lg: 14px;
+  --cta-radius-xl: 20px;
+  --cta-radius-pill: 999px;
+
+  --cta-gradient-gold: linear-gradient(135deg, #FACC15 0%, #D97706 100%);
+  --cta-gradient-splash: radial-gradient(circle at 50% 30%, #FDE68A 0%, #F59E0B 55%, #D97706 100%);
+
+  --cta-elev-raised: 0px 2px 6px rgba(17, 24, 39, 0.06);
+  --cta-elev-modal: 0px 12px 32px rgba(17, 24, 39, 0.12);
+  --cta-border-card: 1px solid #E5E7EB;
+
+  --cta-font-display: 'Fredoka', sans-serif;
+  --cta-font-body: 'Mona Sans', sans-serif;
+}

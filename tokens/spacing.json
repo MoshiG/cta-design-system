@@ -1,0 +1,19 @@
+{
+  "$source": "app_theme.dart AppSpacing + DESIGN_SYSTEM.md §4",
+  "$note": "4-pixel grid. s7 and s9 do not exist and are not invented here.",
+  "unit": "px",
+  "scale": {
+    "s1": 4,
+    "s2": 8,
+    "s3": 12,
+    "s4": 16,
+    "s5": 20,
+    "s6": 24,
+    "s8": 32,
+    "s10": 40
+  },
+  "frame": {
+    "screenInset": 16,
+    "bottomNavHeight": 64
+  }
+}

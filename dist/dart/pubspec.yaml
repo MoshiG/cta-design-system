@@ -1,0 +1,13 @@
+# GENERATED FILE — do not edit. Source: tokens/*.json, generator: build/build.ts.
+name: cta_design_system
+description: Design tokens for the Calvary Temple TAG Arusha applications.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: '>=3.22.0'
+
+dependencies:
+  flutter:
+    sdk: flutter

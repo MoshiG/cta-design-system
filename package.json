@@ -1,0 +1,25 @@
+{
+  "name": "@cta/design-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Design tokens and brand assets for the Calvary Temple TAG Arusha applications.",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "engines": {
+    "node": ">=22.6"
+  },
+  "files": [
+    "dist",
+    "tokens",
+    "assets"
+  ],
+  "exports": {
+    "./tokens": "./dist/ts/tokens.ts",
+    "./tokens.css": "./dist/css/tokens.css",
+    "./tailwind-preset": "./dist/tailwind/preset.js"
+  },
+  "scripts": {
+    "build": "node --experimental-strip-types build/build.ts",
+    "check": "npm run build && git diff --exit-code dist/"
+  }
+}

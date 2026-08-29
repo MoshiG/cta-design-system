@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+*.log
+.env
+# dist/ is deliberately COMMITTED — consumers must not need Node to build.

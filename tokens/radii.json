@@ -1,0 +1,11 @@
+{
+  "$source": "app_theme.dart AppRadii + DESIGN_SYSTEM.md §4",
+  "unit": "px",
+  "scale": {
+    "sm": 6,
+    "md": 10,
+    "lg": 14,
+    "xl": 20,
+    "pill": 999
+  }
+}
