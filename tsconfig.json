@@ -1,3 +1,6 @@
+// Editor support only. This repo has NO dependencies and therefore no tsc:
+// `npm run build` runs on Node's own type stripping, which erases annotations
+// without checking them. CI proves dist/ is current, not that types are sound.
 {
   "compilerOptions": {
     "target": "ES2022",

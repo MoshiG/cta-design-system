@@ -3,6 +3,15 @@
 // Tailwind preset for the Calvary Temple web IMS:
 //   // tailwind.config.js
 //   presets: [require('@cta/design-system/tailwind-preset')]
+//
+// CAUTION — this preset sits in theme.extend, so it OVERRIDES Tailwind's built-in
+// scales step by step rather than replacing them. Only these steps are ours:
+//   neutral: 50, 100, 200, 300, 500, 600, 700, 800, 900
+//   gold-400, gold-500, gold-600, gold-700
+// Any other step (neutral-400, neutral-950, ...) silently falls through to
+// Tailwind's own palette, which is a different hue from this design system.
+// If a design needs one of those steps, add it to tokens/color.json first —
+// do not reach for the Tailwind default.
 
 module.exports = {
   "theme": {
